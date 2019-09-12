@@ -20,16 +20,20 @@ mapping_normalization = [
 #  [ u'«\xa0', u'«' ],
 #  [ u'\xa0»', u'»' ],
   #[ u'\xa0' , u' ' ],
-  [ u'M.\u00a0'   , u'Monsieur ' ],
-  [ u'M. '   , u'Monsieur ' ],
-  [ u'Mme\u00a0'  , u'Madame ' ],
-  [ u'Mme '  , u'Madame ' ],
-  [ u'Mlle\u00a0' , u'Mademoiselle ' ],
-  [ u'Mlle ' , u'Mademoiselle ' ],
-  [ u'Mlles\u00a0', u'Mademoiselles ' ],
-  [ u'Mlles ', u'Mademoiselles ' ],
-  [ u'%', u'pourcent' ],
-  [ u'arr. ', u'arrondissement ' ],
+  [ u'Sig.\u00a0'   , u'Signore ' ],
+  [ u'Sig. '   , u'Signore ' ],
+  [ u'Sigg.\u00a0', u'Signori '],
+  [ u'Sigg. '   , u'Signori ' ],
+  [ u'Sig.ri.\u00a0'   , u'Signori ' ],
+  [ u'Sig.ri. '   , u'Signori ' ],
+  [ u'Sig.ra.\u00a0'  , u'Signora ' ],
+  [ u'Sig.ra. '  , u'Signora ' ],
+  [ u'Sig.na.\u00a0' , u'Signorina ' ],
+  [ u'Sig.na. ' , u'Signorina ' ],
+  [ u'Sig.ne.\u00a0', u'Signorine ' ],
+  [ u'Sig.ne. ', u'Signorine ' ],
+  [ u'%', u'percentuale' ],
+# [ u'arr. ', u'arrondissement ' ],
   [ re.compile('\[\d+\]'), u'' ],
 ]
 
@@ -56,42 +60,42 @@ superscript_chars_mapping = {
   '8 ': u'\u2078 ',
   '9 ': u'\u2079 ',
 
-  'o': 'uméro',
-  '°': 'uméro',
-  'os': 'uméros',
-  '°s': 'uméros',
-  '° s': 'uméros',
-  u'°\u00a0s': 'uméros',
-  'o s': 'uméros',
-  u'o\u00a0s': 'uméros',
+  'o': 'umero',
+  '°': 'umero',
+  'n': 'umeri',
+  #'°s': 'uméros',
+  #'° s': 'uméros',
+  #u'°\u00a0s': 'uméros',
+  #'o s': 'uméros',
+  #u'o\u00a0s': 'uméros',
   's': 's',
   'ter': 'ter',
-  'gr': 'onseigneur',
+  #'gr': 'onseigneur',
 
   ' ': ' ',
 
   # Those should be in sync with ORDINAL_REGEX
-  'e': 'ieme',
-  'è': 'ieme ',
-  'e,': 'ieme,',
-  'èm': 'ieme ',
-  'e ': 'ieme ',
-  'e –': 'ieme –',
-  'r': 'ier',
-  'er': 'ier',
-  'er ': 'ier ',
-  'er.': 'ier.',
-  'er,': 'ier,',
-  'ER': 'ier',
-  'Er': 'ier',
-  'er –': 'ier –',
-  're': 'iere',
-  'ère': 'iere',
-  'ère': 'iere',
-  'ème': 'ieme',
-  'éme': 'ieme',
-  'ème ': 'ieme',
-  'eme': 'ieme',
+#  'e': 'ieme',
+#  'è': 'ieme ',
+#  'e,': 'ieme,',
+#  'èm': 'ieme ',
+#  'e ': 'ieme ',
+#  'e –': 'ieme –',
+#  'r': 'ier',
+#  'er': 'ier',
+#  'er ': 'ier ',
+#  'er.': 'ier.',
+#  'er,': 'ier,',
+#  'ER': 'ier',
+#  'Er': 'ier',
+#  'er –': 'ier –',
+#  're': 'iere',
+#  'ère': 'iere',
+#  'ère': 'iere',
+#  'ème': 'ieme',
+#  'éme': 'ieme',
+#  'ème ': 'ieme',
+#  'eme': 'ieme',
 }
 
 ORDINAL_REGEX = re.compile("(\d+)([ieme|ier|iere]+)")
@@ -173,20 +177,20 @@ def filter_numbers(inp):
       ee = ''.join(e.split())
       if int(e) > 0:
         #print('filter_numbers', 'INT:BEFORE', 'ee=', ee, 'newinp=', newinp)
-        newinp = num2words(int(ee), lang='fr')
+        newinp = num2words(int(ee), lang='it')
         #print('filter_numbers', 'INT:AFTER', 'ee=', ee, 'newinp=', newinp)
     except ValueError:
       try:
         ee = ''.join(e.replace(',', '.').split())
         if float(ee):
           #print('filter_numbers', 'FLOAT:BEFORE', 'ee=', ee, 'newinp=', newinp)
-          newinp = num2words(float(ee), lang='fr')
+          newinp = num2words(float(ee), lang='it')
           #print('filter_numbers', 'FLOAT:AFTER', 'ee=', ee, 'newinp=', newinp)
       except ValueError:
         matches = ORDINAL_REGEX.match(e)
         #print('filter_numbers', 'ORDINAL', 'e=', e, matches)
         if matches:
-          newinp = num2words(int(matches.group(1)), ordinal=True, lang='fr')
+          newinp = num2words(int(matches.group(1)), ordinal=True, lang='it')
 
     finalinp += newinp
 
